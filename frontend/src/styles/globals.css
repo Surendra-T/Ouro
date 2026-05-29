@@ -1,0 +1,201 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Lora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0.98 0.01 95;
+    --foreground: 0.2 0.02 270;
+    --card: 0.992 0.01 95;
+    --card-foreground: 0.2 0.02 270;
+    --border: 0.9 0.01 240;
+    --line: 0.9 0.01 240;
+    --muted: 0.96 0.01 95;
+    --muted-foreground: 0.46 0.02 270;
+    --primary: 0.22 0.02 270;
+    --primary-foreground: 0.98 0.01 95;
+    --accent: 0.93 0.05 90;
+    --accent-foreground: 0.24 0.04 85;
+    --gold: 0.78 0.12 90;
+    --destructive: 0.52 0.2 25.7;
+    --ring: 0.76 0.1 90;
+    --radius: 0.625rem;
+    --font-sans: "Manrope", ui-sans-serif, system-ui;
+    --font-serif: "Lora", ui-serif, Georgia;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-output: var(--font-serif);
+  }
+
+  .dark {
+    --background: 0.12 0.01 270;
+    --foreground: 0.96 0.01 95;
+    --card: 0.16 0.01 270;
+    --card-foreground: 0.96 0.01 95;
+    --border: 0.28 0.02 250;
+    --line: 0.28 0.02 250;
+    --muted: 0.2 0.01 270;
+    --muted-foreground: 0.7 0.01 95;
+    --primary: 0.9 0.02 95;
+    --primary-foreground: 0.16 0.01 270;
+    --accent: 0.28 0.04 90;
+    --accent-foreground: 0.96 0.01 95;
+    --gold: 0.78 0.12 90;
+    --destructive: 0.396 0.141 25.723;
+    --ring: 0.66 0.08 90;
+  }
+
+  * {
+    border-color: oklch(var(--border));
+  }
+
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: var(--font-sans);
+    background: linear-gradient(
+        120deg,
+        color-mix(in oklch, oklch(var(--background)) 92%, oklch(var(--accent)) 8%),
+        oklch(var(--background)) 60%
+      );
+    color: oklch(var(--foreground));
+    text-rendering: optimizeLegibility;
+  }
+
+  input,
+  textarea,
+  select {
+    color: oklch(var(--foreground));
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .glass-panel {
+    background: color-mix(in oklch, oklch(var(--card)) 82%, transparent);
+    backdrop-filter: blur(12px);
+  }
+
+  .ring-focus {
+    box-shadow: 0 0 0 4px color-mix(in oklch, oklch(var(--ring)) 35%, transparent);
+  }
+
+  .aurora-layer {
+    position: fixed;
+    inset: -20% 0 0 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .aurora-layer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        1200px circle at 20% 20%,
+        color-mix(in oklch, oklch(var(--primary)) 20%, transparent),
+        transparent 55%
+      ),
+      radial-gradient(
+        900px circle at 80% 10%,
+        color-mix(in oklch, oklch(var(--accent)) 35%, transparent),
+        transparent 60%
+      );
+    opacity: 0.2;
+    filter: blur(24px);
+    animation: aurora 18s ease-in-out infinite;
+  }
+
+  .aurora-idle::before {
+    opacity: 0.12;
+  }
+
+  .aurora-active::before {
+    opacity: 0.28;
+  }
+
+  .aurora-dev::before {
+    opacity: 0.22;
+    background: radial-gradient(
+        900px circle at 30% 20%,
+        color-mix(in oklch, oklch(var(--primary)) 20%, transparent),
+        transparent 60%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 1px,
+        transparent 1px
+      );
+    background-size: auto, 48px 48px;
+  }
+
+  .reading-output {
+    font-family: var(--font-output);
+    font-size: 17px;
+    line-height: 1.75;
+    hanging-punctuation: first last;
+  }
+
+  .reading-output p {
+    margin-bottom: 1rem;
+  }
+
+  .reading-output blockquote {
+    border-left: 2px solid oklch(var(--border));
+    padding-left: 1rem;
+    color: color-mix(in oklch, oklch(var(--foreground)) 70%, oklch(var(--muted-foreground)));
+  }
+
+  .reading-output sup {
+    font-size: 0.7em;
+    vertical-align: text-top;
+  }
+
+  .reading-output .citation {
+    font-size: 0.85em;
+    line-height: 1.25;
+  }
+
+  .output-font-sans {
+    --font-output: var(--font-sans);
+  }
+
+  .output-font-serif {
+    --font-output: var(--font-serif);
+  }
+
+  .output-font-mono {
+    --font-output: var(--font-mono);
+  }
+}
+
+@media print {
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+
+  .reading-output {
+    font-size: 15px;
+  }
+}
